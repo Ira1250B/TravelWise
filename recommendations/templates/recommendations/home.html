@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TravelWise</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            margin: 0;
+        }
+
+        header {
+            background: #176b87;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .form-box, .package {
+            background: white;
+            padding: 22px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px #00000015;
+        }
+
+        select, button {
+            padding: 12px;
+            margin: 10px 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button {
+            background: #176b87;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .package {
+            border-left: 5px solid #176b87;
+        }
+
+        .price {
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>TravelWise</h1>
+    <p>Find your perfect travel destination!</p>
+
+    <p>Welcome, {{ user.username }}!</p>
+
+    <form method="POST" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit" style="max-width: 150px;">
+            Logout
+        </button>
+    </form>
+</header>
+
+<div class="container">
+
+    <div class="form-box">
+        <h2>Tell Us Your Travel Preferences</h2>
+
+        <form method="GET">
+            {{ form.as_p }}
+
+            <button type="submit">
+                Find My Travel Package
+            </button>
+        </form>
+    </div>
+
+    {% if packages is not None %}
+
+        <h2>Recommended Travel Packages</h2>
+
+        {% for package in packages %}
+
+            <div class="package">
+                <h3>{{ package.name }}</h3>
+
+                <p><b>Destination:</b> {{ package.location }}</p>
+
+                <p><b>Travel Type:</b> {{ package.travel_type }}</p>
+
+                <p>{{ package.description }}</p>
+
+                <p class="price">
+                    Estimated Price: ₹{{ package.price }}
+                </p>
+
+                <p>
+                    Food: {{ package.food_score }}/5 |
+                    Nature: {{ package.nature_score }}/5 |
+                    Adventure: {{ package.adventure_score }}/5
+                </p>
+
+                <p>
+                    Heritage: {{ package.heritage_score }}/5 |
+                    Budget: {{ package.budget_score }}/5 |
+                    Comfort: {{ package.comfort_score }}/5
+                </p>
+            </div>
+
+        {% empty %}
+            <p>No matching travel packages found.</p>
+        {% endfor %}
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>
