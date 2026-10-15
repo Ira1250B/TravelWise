@@ -1,5 +1,6 @@
 TravelWise — Priority-Based Travel Recommendation System
 Project Description
+
 TravelWise is a web application developed using Django and SQLite. It recommends tourist destinations based on the user's travel type and highest travel priority.
 Features
 User registration, login and logout
